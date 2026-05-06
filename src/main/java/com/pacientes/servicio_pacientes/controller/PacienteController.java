@@ -38,4 +38,7 @@ public class PacienteController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+
 }
