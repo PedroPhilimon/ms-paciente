@@ -1,7 +1,7 @@
 package com.pacientes.servicio_pacientes.dto;
 
-import com.pacientes.servicio_pacientes.model.Paciente;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,17 +13,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PacienteDTO {
     private Long id;
+    @NotBlank(message = "El RUN es obligatorio")
     private String run;
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
+    @NotBlank(message = "El apellido es obligatorio")
     private String apellido;
+    @NotBlank(message = "La previsión es obligatoria")
     private String prevision;
 
-    /*public Producto toModel(){
-        return new Producto(id, nombreProducto, precio, descripcion, categoria != null ? categoria.toModel() : null);
-    }*/
 
-    /*public static PacienteDTO fromModel(Paciente p) {
-        if(p == null) return null;
-        return new PacienteDTO(p.getId(), p.getNombre(), p.getApellido(), p.getPrevision(), CategoriaDTO.fromModel(p.getCategoria()));
-    } */
 }

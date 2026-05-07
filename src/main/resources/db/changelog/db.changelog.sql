@@ -5,5 +5,4 @@ CREATE TABLE paciente (
     apellido VARCHAR(255),
     fechaNacimiento VARCHAR(255),
     prevision VARCHAR(255)
-    /*FOREIGN KEY (categoria_id) REFERENCES categoria(id_categoria)*/
 )
