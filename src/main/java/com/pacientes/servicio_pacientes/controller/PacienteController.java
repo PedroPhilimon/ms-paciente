@@ -39,6 +39,42 @@ public class PacienteController {
         }
     }
 
+    @PutMapping("/{id}")
+
+public ResponseEntity<Paciente> actualizar(@PathVariable Integer id, @RequestBody Paciente paciente) {
+
+    try{
+
+        Paciente pac = pacienteService.findById(id);
+
+        pac.setId(id);
+
+        pac.setRun(paciente.getRun());
+
+        pac.setNombre(paciente.getNombre());
+
+        pac.setApellidos(paciente.getApellidos());
+
+        pac.setFechaNacimiento(paciente.getFechaNacimiento());
+
+        pac.setCorreo(paciente.getCorreo());
+
+
+
+        pacienteService.save(pac);
+
+       
+
+        return ResponseEntity.ok(paciente);
+
+    } catch (Exception e) {
+
+        return ResponseEntity.notFound().build();
+
+    }
+
+}
+
 
 
 }
