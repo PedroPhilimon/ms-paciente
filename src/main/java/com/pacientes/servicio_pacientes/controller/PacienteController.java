@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pacientes.servicio_pacientes.dto.PacienteDTO;
 import com.pacientes.servicio_pacientes.model.Paciente;
 import com.pacientes.servicio_pacientes.service.PacienteService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/pacientes")
@@ -39,42 +44,33 @@ public class PacienteController {
         }
     }
 
+    
+
     @PutMapping("/{id}")
-
-public ResponseEntity<Paciente> actualizar(@PathVariable Integer id, @RequestBody Paciente paciente) {
-
-    try{
-
+public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @Valid @RequestBody PacienteDTO pacienteDTO) {
+    try {
         Paciente pac = pacienteService.findById(id);
+        
+        if (pac == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-        pac.setId(id);
-
-        pac.setRun(paciente.getRun());
-
-        pac.setNombre(paciente.getNombre());
-
-        pac.setApellidos(paciente.getApellidos());
-
-        pac.setFechaNacimiento(paciente.getFechaNacimiento());
-
-        pac.setCorreo(paciente.getCorreo());
-
-
+        // Actualizamos los datos desde el DTO
+        pac.setRun(pacienteDTO.getRun());
+        pac.setNombre(pacienteDTO.getNombre());
+        pac.setApellido(pacienteDTO.getApellido()); // En singular como tu modelo
+        pac.setPrevision(pacienteDTO.getPrevision());
 
         pacienteService.save(pac);
-
-       
-
-        return ResponseEntity.ok(paciente);
-
+        return ResponseEntity.ok(pac);
+        
     } catch (Exception e) {
-
-        return ResponseEntity.notFound().build();
-
+        return ResponseEntity.internalServerError().build();
     }
+}
 
 }
 
 
 
-}
+
