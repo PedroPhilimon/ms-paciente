@@ -69,6 +69,15 @@ public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @Valid @Reques
     }
 }
 
+@DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        try {
+            pacienteService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 
 
