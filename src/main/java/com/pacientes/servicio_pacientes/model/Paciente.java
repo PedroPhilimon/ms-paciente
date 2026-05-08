@@ -23,7 +23,6 @@ public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     
-    @NotNull
     @Column(name = "id_paciente")
     private Long id;
     
