@@ -32,7 +32,7 @@ public class Paciente {
     @Column(nullable = false)
     private String apellido;
 
-    @Column(nullable = true)
+    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
     @Column(nullable = false)
