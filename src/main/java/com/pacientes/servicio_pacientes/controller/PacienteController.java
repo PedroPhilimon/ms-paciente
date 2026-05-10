@@ -64,6 +64,8 @@ public class PacienteController {
     return ResponseEntity.status(201).body(pacienteService.save(nuevoPaciente));
 }
 
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> buscar(@PathVariable Long id) {
         try {

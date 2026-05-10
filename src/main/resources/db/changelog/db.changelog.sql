@@ -10,7 +10,11 @@ CREATE TABLE paciente (
     apellido VARCHAR(255) NOT NULL,
     fecha_nacimiento DATE,
     prevision VARCHAR(255) NOT NULL
+
 );
+
+--changeset pablo:3
+ALTER TABLE paciente ADD CONSTRAINT uc_paciente_run UNIQUE (run);
 
 --changeset pedro:2
 INSERT INTO paciente (run, nombre, apellido, fecha_nacimiento, prevision) VALUES
