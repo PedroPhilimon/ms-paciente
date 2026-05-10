@@ -1,10 +1,12 @@
 package com.pacientes.servicio_pacientes.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pacientes.servicio_pacientes.dto.PacienteDTO;
 import com.pacientes.servicio_pacientes.model.Paciente;
 import com.pacientes.servicio_pacientes.repository.PacienteRepository;
 
@@ -16,10 +18,13 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public List<Paciente> findAll() {
-        return pacienteRepository.findAll();
+    public List<PacienteDTO> findAll() {
+        return pacienteRepository.findAll() 
+                .stream()
+                .map(this::mapToResponseDTO) 
+                .collect(Collectors.toList());
     }
-
+    
     public Paciente findById(long id) {
         return pacienteRepository.findById(id).get();
     }
@@ -30,5 +35,17 @@ public class PacienteService {
 
     public void delete(Long id) {
         pacienteRepository.deleteById(id);
+    }
+
+
+    private PacienteDTO mapToResponseDTO(Paciente paciente) {
+        return PacienteDTO.builder()
+                .id(paciente.getId())
+                .run(paciente.getRun())
+                .nombre(paciente.getNombre())
+                .apellido(paciente.getApellido())
+                .fechaNacimiento(paciente.getFechaNacimiento())
+                .prevision(paciente.getPrevision())
+                .build();
     }
 }

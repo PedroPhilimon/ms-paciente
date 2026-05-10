@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pacientes.servicio_pacientes.dto.PacienteDTO;
+import com.pacientes.servicio_pacientes.model.HistorialPaciente;
 import com.pacientes.servicio_pacientes.model.Paciente;
+import com.pacientes.servicio_pacientes.service.HistorialPacienteService;
 import com.pacientes.servicio_pacientes.service.PacienteService;
 
 import jakarta.validation.Valid;
@@ -27,13 +29,25 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @GetMapping
-    public ResponseEntity<List<Paciente>> listar() {
-        List<Paciente> pacientes = pacienteService.findAll();
+    public ResponseEntity<List<PacienteDTO>> obtenerTodas() {
+        List<PacienteDTO> citas = pacienteService.findAll();
+        return ResponseEntity.ok(citas);
+    }
 
-        if(pacientes.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(pacientes);
+    
+    @Autowired
+    private HistorialPacienteService historialService;
+
+    // Endpoint para ver el historial de un paciente específico
+    @GetMapping("/{id}/historial")
+    public ResponseEntity<List<HistorialPaciente>> getHistorial(@PathVariable Long id) {
+        return ResponseEntity.ok(historialService.obtenerPorPaciente(id));
+    }
+
+    // Endpoint para agregar una nueva entrada al historial
+    @PostMapping("/historial")
+    public ResponseEntity<HistorialPaciente> crearHistorial(@RequestBody HistorialPaciente historial) {
+        return ResponseEntity.ok(historialService.guardar(historial));
     }
 
     @PostMapping
@@ -51,11 +65,11 @@ public class PacienteController {
 }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> buscar(@PathVariable Integer id) {
+    public ResponseEntity<Paciente> buscar(@PathVariable Long id) {
         try {
             Paciente paciente = pacienteService.findById(id);
             return ResponseEntity.ok(paciente);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
