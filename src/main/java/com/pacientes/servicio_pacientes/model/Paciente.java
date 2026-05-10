@@ -27,7 +27,7 @@ public class Paciente {
     private Long id;
     
     @NotBlank(message = "El RUN es obligatorio")
-    @Column(nullable = false) 
+    @Column(nullable = false, unique = true) 
     private String run;
 
     @NotBlank(message = "El nombre es obligatorio")
