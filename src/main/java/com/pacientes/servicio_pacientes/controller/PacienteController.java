@@ -50,19 +50,19 @@ public class PacienteController {
         return ResponseEntity.ok(historialService.guardar(historial));
     }
 
-    @PostMapping
-    public ResponseEntity<Paciente> crear(@Valid @RequestBody PacienteDTO pacienteDTO) {
-
-    Paciente nuevoPaciente = new Paciente();
-
-    nuevoPaciente.setRun(pacienteDTO.getRun());
-    nuevoPaciente.setNombre(pacienteDTO.getNombre());
-    nuevoPaciente.setApellido(pacienteDTO.getApellido());
-    nuevoPaciente.setFechaNacimiento(pacienteDTO.getFechaNacimiento());
-    nuevoPaciente.setPrevision(pacienteDTO.getPrevision());
-
-    return ResponseEntity.status(201).body(pacienteService.save(nuevoPaciente));
-}
+        @PostMapping
+        public ResponseEntity<Paciente> crear(@Valid @RequestBody PacienteDTO pacienteDTO) {
+        
+        Paciente nuevoPaciente = new Paciente();
+        
+        nuevoPaciente.setRun(pacienteDTO.getRun());
+        nuevoPaciente.setNombre(pacienteDTO.getNombre());
+        nuevoPaciente.setApellido(pacienteDTO.getApellido());
+        nuevoPaciente.setFechaNacimiento(pacienteDTO.getFechaNacimiento());
+        nuevoPaciente.setPrevision(pacienteDTO.getPrevision());
+        
+        return ResponseEntity.status(201).body(pacienteService.save(nuevoPaciente));
+    }
 
 
 
