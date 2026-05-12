@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pacientes.servicio_pacientes.dto.PacienteDTO;
+import com.pacientes.servicio_pacientes.dto.PacienteRequestDTO;
 import com.pacientes.servicio_pacientes.model.Paciente;
 import com.pacientes.servicio_pacientes.repository.PacienteRepository;
 
@@ -18,7 +18,7 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public List<PacienteDTO> findAll() {
+    public List<PacienteRequestDTO> findAll() {
         return pacienteRepository.findAll() 
                 .stream()
                 .map(this::mapToResponseDTO) 
@@ -38,8 +38,8 @@ public class PacienteService {
     }
 
 
-    private PacienteDTO mapToResponseDTO(Paciente paciente) {
-        return PacienteDTO.builder()
+    private PacienteRequestDTO mapToResponseDTO(Paciente paciente) {
+        return PacienteRequestDTO.builder()
                 .id(paciente.getId())
                 .run(paciente.getRun())
                 .nombre(paciente.getNombre())

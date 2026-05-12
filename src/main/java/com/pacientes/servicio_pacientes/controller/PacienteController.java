@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pacientes.servicio_pacientes.dto.PacienteDTO;
+import com.pacientes.servicio_pacientes.dto.PacienteRequestDTO;
 import com.pacientes.servicio_pacientes.model.HistorialPaciente;
 import com.pacientes.servicio_pacientes.model.Paciente;
 import com.pacientes.servicio_pacientes.service.HistorialPacienteService;
@@ -29,8 +29,8 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @GetMapping
-    public ResponseEntity<List<PacienteDTO>> obtenerTodas() {
-        List<PacienteDTO> citas = pacienteService.findAll();
+    public ResponseEntity<List<PacienteRequestDTO>> obtenerTodas() {
+        List<PacienteRequestDTO> citas = pacienteService.findAll();
         return ResponseEntity.ok(citas);
     }
 
@@ -51,7 +51,7 @@ public class PacienteController {
     }
 
         @PostMapping
-        public ResponseEntity<Paciente> crear(@Valid @RequestBody PacienteDTO pacienteDTO) {
+        public ResponseEntity<Paciente> crear(@Valid @RequestBody PacienteRequestDTO pacienteDTO) {
 
         Paciente nuevoPaciente = new Paciente();
         
@@ -79,23 +79,23 @@ public class PacienteController {
     
 
         @PutMapping("/{id}")
-        public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @Valid @RequestBody PacienteDTO pacienteDTO) {
+        public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @Valid @RequestBody PacienteRequestDTO pacienteDTO) {
         try {
             Paciente pac = pacienteService.findById(id);
-            
+
             if (pac == null) {
                 return ResponseEntity.notFound().build();
             }
-        
+
             // Actualizamos los datos desde el DTO
             pac.setRun(pacienteDTO.getRun());
             pac.setNombre(pacienteDTO.getNombre());
             pac.setApellido(pacienteDTO.getApellido()); // En singular como tu modelo
             pac.setPrevision(pacienteDTO.getPrevision());
-        
+
             pacienteService.save(pac);
             return ResponseEntity.ok(pac);
-            
+
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

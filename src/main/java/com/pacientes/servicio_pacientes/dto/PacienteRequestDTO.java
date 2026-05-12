@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PacienteDTO {
+public class PacienteRequestDTO {
 
     private Long id;
 
