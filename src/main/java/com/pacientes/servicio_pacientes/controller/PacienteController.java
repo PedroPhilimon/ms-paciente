@@ -52,7 +52,7 @@ public class PacienteController {
 
         @PostMapping
         public ResponseEntity<Paciente> crear(@Valid @RequestBody PacienteDTO pacienteDTO) {
-        
+
         Paciente nuevoPaciente = new Paciente();
         
         nuevoPaciente.setRun(pacienteDTO.getRun());
@@ -60,7 +60,7 @@ public class PacienteController {
         nuevoPaciente.setApellido(pacienteDTO.getApellido());
         nuevoPaciente.setFechaNacimiento(pacienteDTO.getFechaNacimiento());
         nuevoPaciente.setPrevision(pacienteDTO.getPrevision());
-        
+
         return ResponseEntity.status(201).body(pacienteService.save(nuevoPaciente));
     }
 
