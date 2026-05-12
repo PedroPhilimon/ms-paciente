@@ -2,25 +2,17 @@ package com.pacientes.servicio_pacientes.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 
-import com.pacientes.servicio_pacientes.model.HistorialPaciente;
-import com.pacientes.servicio_pacientes.repository.HistorialPacienteRepository;
+import com.pacientes.servicio_pacientes.dto.HistorialRequestDTO;
+import com.pacientes.servicio_pacientes.dto.HistorialResponseDTO;
 
-import lombok.RequiredArgsConstructor;
+public interface HistorialPacienteService {
+    
+    HistorialResponseDTO create(Long pacienteId, HistorialRequestDTO dto);
 
-@Service
-@RequiredArgsConstructor
-public class HistorialPacienteService {
-    private final HistorialPacienteRepository historialRepository;
+    List<HistorialResponseDTO> findByPacienteId(Long pacienteId);
 
-    public HistorialPaciente guardar(HistorialPaciente historial) {
-        return historialRepository.save(historial);
-    }
+    void delete(Long id);
 
-    public List<HistorialPaciente> obtenerPorPaciente(Long pacienteId) {
-        return historialRepository.findAll().stream()
-                .filter(h -> h.getPaciente().getId().equals(pacienteId))
-                .toList();
-    }
+
 }

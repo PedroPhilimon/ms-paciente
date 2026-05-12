@@ -1,51 +1,21 @@
 package com.pacientes.servicio_pacientes.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.pacientes.servicio_pacientes.dto.PacienteRequestDTO;
-import com.pacientes.servicio_pacientes.model.Paciente;
-import com.pacientes.servicio_pacientes.repository.PacienteRepository;
+import com.pacientes.servicio_pacientes.dto.PacienteResponseDTO;
 
-import jakarta.transaction.Transactional;
+public interface PacienteService {
 
-@Service
-@Transactional
-public class PacienteService {
-    @Autowired
-    private PacienteRepository pacienteRepository;
+    List<PacienteResponseDTO> findAll();
 
-    public List<PacienteRequestDTO> findAll() {
-        return pacienteRepository.findAll() 
-                .stream()
-                .map(this::mapToResponseDTO) 
-                .collect(Collectors.toList());
-    }
-    
-    public Paciente findById(long id) {
-        return pacienteRepository.findById(id).get();
-    }
+    PacienteResponseDTO findByDto(Long id);
 
-    public Paciente save(Paciente paciente) {
-        return pacienteRepository.save(paciente);
-    }
+    PacienteResponseDTO create(PacienteRequestDTO dto);
 
-    public void delete(Long id) {
-        pacienteRepository.deleteById(id);
-    }
+    PacienteResponseDTO update(Long id, PacienteRequestDTO dto);
+
+    void delete(Long id);
 
 
-    private PacienteRequestDTO mapToResponseDTO(Paciente paciente) {
-        return PacienteRequestDTO.builder()
-                .id(paciente.getId())
-                .run(paciente.getRun())
-                .nombre(paciente.getNombre())
-                .apellido(paciente.getApellido())
-                .fechaNacimiento(paciente.getFechaNacimiento())
-                .prevision(paciente.getPrevision())
-                .build();
-    }
 }
