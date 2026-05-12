@@ -78,28 +78,28 @@ public class PacienteController {
 
     
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @Valid @RequestBody PacienteDTO pacienteDTO) {
-    try {
-        Paciente pac = pacienteService.findById(id);
+        @PutMapping("/{id}")
+        public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @Valid @RequestBody PacienteDTO pacienteDTO) {
+        try {
+            Paciente pac = pacienteService.findById(id);
+            
+            if (pac == null) {
+                return ResponseEntity.notFound().build();
+            }
         
-        if (pac == null) {
-            return ResponseEntity.notFound().build();
+            // Actualizamos los datos desde el DTO
+            pac.setRun(pacienteDTO.getRun());
+            pac.setNombre(pacienteDTO.getNombre());
+            pac.setApellido(pacienteDTO.getApellido()); // En singular como tu modelo
+            pac.setPrevision(pacienteDTO.getPrevision());
+        
+            pacienteService.save(pac);
+            return ResponseEntity.ok(pac);
+            
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
-
-        // Actualizamos los datos desde el DTO
-        pac.setRun(pacienteDTO.getRun());
-        pac.setNombre(pacienteDTO.getNombre());
-        pac.setApellido(pacienteDTO.getApellido()); // En singular como tu modelo
-        pac.setPrevision(pacienteDTO.getPrevision());
-
-        pacienteService.save(pac);
-        return ResponseEntity.ok(pac);
-        
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().build();
     }
-}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Paciente> eliminar(@PathVariable Long id) {
