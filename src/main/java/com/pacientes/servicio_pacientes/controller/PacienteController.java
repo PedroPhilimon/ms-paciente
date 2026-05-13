@@ -51,8 +51,8 @@ public class PacienteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PacienteResponseDTO> update(@PathVariable Long id, @Valid @RequestBody PacienteRequestDTO dto) {
-        PacienteResponseDTO actualizarProducto = pacienteService.update(id, dto);
-        return ResponseEntity.ok(actualizarProducto);
+        PacienteResponseDTO actualizarPaciente = pacienteService.update(id, dto);
+        return ResponseEntity.ok(actualizarPaciente);
     }
 
     @DeleteMapping("/{id}")

@@ -52,25 +52,19 @@ public class PacienteServiceImpl implements PacienteService {
 
    @Override
     public PacienteResponseDTO update(Long id, PacienteRequestDTO dto) {
-        // 1. Buscar el paciente existente o lanzar error si no existe
         Paciente paciente = pacienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se puede actualizar: Paciente no encontrado con ID: " + id));
 
-        // 2. Actualizar los campos con la información del DTO
-        // IMPORTANTE: Mantener o actualizar el RUN y el resto de los datos
         paciente.setRun(dto.getRun()); 
         paciente.setNombre(dto.getNombre());
         paciente.setApellido(dto.getApellido());
         paciente.setFechaNacimiento(dto.getFechaNacimiento());
         paciente.setPrevision(dto.getPrevision());
 
-        // Nota: No es necesario hacer paciente.setId(id) porque ya lo obtuvimos por su ID
-        // y JPA reconoce que debe actualizar ese registro específico.
-
-        // 3. Guardar los cambios
+       
         Paciente actualizarPaciente = pacienteRepository.save(paciente);
 
-        // 4. Retornar la respuesta convertida a DTO
+        
         return PacienteResponseDTO.fromEntity(actualizarPaciente);
     }
 
